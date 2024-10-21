@@ -15,9 +15,11 @@
     display: flex;
 }
 
+/* LEFT AREA */
+
 .left {
     height: 100vh;
-    width: 70%;
+    width: 60%;
     padding: 52px;
 }
 
@@ -25,10 +27,83 @@
     width: 200px;
 }
 
+.left div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.left h1 {
+    font-weight: 400;
+    font-size: 36px;
+}
+
+/* RIGHT AREA */
+
 .right {
     background-color: white;
     height: 100vh;
-    width: 30%;
+    width: 40%;
     border-radius: 32px 0 0 32px;
     padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.formLogin {
+    height: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.formLogin h1 {
+    font-size: 32px;
+    text-decoration: underline;
+}
+
+.formLogin form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inputForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputForm label {
+    font-weight: bold;
+}
+
+.inputForm input {
+    border: none;
+    border-bottom: 2px solid black;
+    padding: 2px;
+    padding-left: 12px;
+}
+
+.inputForm input:focus{
+    outline: none;
+}
+
+.buttonForm {
+    margin-top: 32px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonForm button {
+    background-color: #001489;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 24px;
+    cursor: pointer;
 }
