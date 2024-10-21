@@ -1,0 +1,24 @@
+.navBar {
+    width: 25%;
+    height: 100vh;
+    background-color: #001489;
+    border-radius: 0 24px 24px 0;
+}
+
+.containerLink {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    padding: 4px;
+}
+
+.selected {
+    background: linear-gradient(to right, #4983FF, #9FB5E2);
+    border-radius: 12px;
+}
