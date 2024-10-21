@@ -1,0 +1,34 @@
+.backgroundLogin {
+    height: 100vh;
+    width: 100%;
+    background-image: url("../../../assets/backgroundLogin.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.backgroundBlue {
+    background-color: rgba(0, 51, 153, 0.5);
+    height: 100vh;
+    width: 100%;
+    /* ============== */
+    display: flex;
+}
+
+.left {
+    height: 100vh;
+    width: 70%;
+    padding: 52px;
+}
+
+.left img {
+    width: 200px;
+}
+
+.right {
+    background-color: white;
+    height: 100vh;
+    width: 30%;
+    border-radius: 32px 0 0 32px;
+    padding: 12px;
+}
