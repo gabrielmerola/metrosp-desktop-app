@@ -13,7 +13,7 @@ export function Loading() {
   
   return (
     <div className='background-linear'>
-      <img src={logoGov} alt="Governo do Estado São Paulo" />
+      <img src={logoGov} alt="Logo Governo do Estado São Paulo" />
       {/* <i style={{fontSize: '24px', color: 'white'}} className="fa-solid fa-spinner animation-spin"></i> */}
     </div>
   )
