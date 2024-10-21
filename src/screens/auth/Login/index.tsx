@@ -1,20 +1,24 @@
 import "./login.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logoGov from '../../../assets/governoSP.png'
 import metroLogo from '../../../assets/metroLogo.png'
 
 export function Login() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     function onSubmit() {
         if(!email || !password) {
             alert('Preencha todos os campos')
             return
         }
-        alert(`email: ${email}`)
-        alert(`password: ${password}`)
+        if(email == "central"){
+            navigate('/central/dashboard')
+        } else {
+            navigate('/station/dashboard')
+        }
     }
     return (
         <main className="backgroundLogin">
