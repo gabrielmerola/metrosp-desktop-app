@@ -2,9 +2,15 @@ import './confirmCode.css'
 import govSP from '../../../assets/governoSP.png'
 import metroLogo from '../../../assets/metroLogo.png'
 import { useRef } from 'react';
+import { AuthRepository } from '../../../api/repositories/auth_repository_http';
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 export function ConfirmCode() {
     const inputsRef = useRef<(HTMLInputElement)[]>([]);
+    const AuthRepo = new AuthRepository()
+    const navigate = useNavigate()
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         if (e.target.value.length > 1) {
@@ -15,17 +21,80 @@ export function ConfirmCode() {
         }
     };
 
-    function sendCode() {
+    async function sendCode() {
         const code = inputsRef.current.map(input => input.value)
-        alert(code.join(''));
+        if(code.length == 0){
+            toast.error("Código de Verificação Inválido", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return
+        }
+        const response = await AuthRepo.confirmEmail(code.join(''))
+        if(response.status == 200){
+            toast.success("Email verificado com sucesso!", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            
+            const response = await AuthRepo.me()
+            console.log(response)
+        }else {
+            toast.error("Erro ao verificar código", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
     }
 
-    function resendEmail() {
-        alert("enviado")
+    async function resendEmail() {
+        const response = await AuthRepo.verifyEmail()
+        if(response.status == 200){
+            toast.success("Código enviado para o email", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        } else {
+            toast.error("Erro ao enviar email", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
     }
 
     return (
         <main style={{padding:12, height: '100vh'}}>
+            <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
             <div style={{height:'10%'}}>
                 <img style={{backgroundColor:'black', padding:8, borderRadius:12}} width={200} src={govSP} alt="" />
             </div>
