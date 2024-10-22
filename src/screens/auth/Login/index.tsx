@@ -3,25 +3,51 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logoGov from '../../../assets/governoSP.png'
 import metroLogo from '../../../assets/metroLogo.png'
+import { AuthRepository } from "../../../api/repositories/auth_repository_http";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const AuthRepo = new AuthRepository();
 
-    function onSubmit() {
+    async function onSubmit() {
         if(!email || !password) {
             alert('Preencha todos os campos')
             return
         }
-        if(email == "central"){
+
+        const response = await AuthRepo.login(email, password)
+        toast.success("Bem-vindo!!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        setTimeout(() => {
             navigate('/central/dashboard')
-        } else {
-            navigate('/station/dashboard')
-        }
+        }, 3000);
     }
     return (
         <main className="backgroundLogin">
+            <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <section className="backgroundBlue">
                 <div className="left">
                     <img src={logoGov} alt="Logo Governo do Estado São Paulo" />
@@ -46,7 +72,7 @@ export function Login() {
                                 <span style={{fontSize: 12}}>Esqueceu sua senha? <Link to={'/'} style={{textDecoration: "underline", color: 'black'}}>Clique aqui!</Link></span>
                             </div>
                             <div className="buttonForm">
-                                <button type="submit" onClick={onSubmit}>Entrar</button>
+                                <button type="button" onClick={onSubmit}>Entrar</button>
                             </div>
                         </form>
                     </div>
