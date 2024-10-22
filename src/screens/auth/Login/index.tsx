@@ -32,6 +32,9 @@ export function Login() {
             return
         }
         const response = await AuthRepo.login(email, password)
+        if(response.token){
+            await AuthRepo.me()
+        }
         toast.success("Bem-vindo!!", {
             position: "top-center",
             autoClose: 3000,
@@ -42,9 +45,9 @@ export function Login() {
             progress: undefined,
             theme: "colored",
         });
-        setTimeout(() => {
-            navigate('/central/dashboard')
-        }, 3000);
+        // setTimeout(() => {
+        //     navigate('/central/dashboard')
+        // }, 3000);
     }
     return (
         <main className="backgroundLogin">
