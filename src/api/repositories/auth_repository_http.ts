@@ -8,10 +8,25 @@ export class AuthRepository {
                 username: email,
                 password: password
             })
-            alert(response.data.token)
+            localStorage.setItem('token', response.data.token)
+            // alert(response.data.token)
             return response.data
         } catch(error: any) {
-            return error
+            throw error
+        }
+    }
+
+    async me() {
+        try {
+            const response = await httpAuth.get('/me', {
+                headers: {
+                    Authorization: `bearer ${localStorage.getItem('token')}`
+                }
+            })
+            alert(response.data)
+            return response.data
+        } catch(error: any) {
+            throw error
         }
     }
 }
