@@ -18,11 +18,23 @@ export function Login() {
             alert('Preencha todos os campos')
             return
         }
-
+        if(email.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$') || password.match("^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&*()_\-+=\[{\]};:'\",<.>/?]).{8,}$")){
+            toast.error("Email ou Senha inválidos", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return
+        }
         const response = await AuthRepo.login(email, password)
         toast.success("Bem-vindo!!", {
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
