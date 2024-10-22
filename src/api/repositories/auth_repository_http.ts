@@ -29,4 +29,34 @@ export class AuthRepository {
             throw error
         }
     }
+
+    // Not implemented
+    async verifyEmail() {
+        try {
+            const response = await httpAuth.get('/verify-email', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            return response
+        } catch(error: any) {
+            throw error
+        }
+    }
+
+    // Not implemented
+    async confirmEmail(code: string) {
+        try {
+            const response = await httpAuth.post('/confirm-email', {
+                code: code
+            }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            return response
+        } catch(error: any) {
+            throw error
+        }
+    }
 }

@@ -27,6 +27,19 @@ export function Login() {
             });
             return
         }
+        if(!email.match("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$") || !password.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_\\-+=\\[{\\]};:'\",<.>/?]).{8,}$")){
+            toast.error("Email ou Senha Inválido", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return
+        }
         const response = await AuthRepo.login(email, password)
         console.log(response.status === 401)
         if(response.status === 401) {
@@ -66,6 +79,17 @@ export function Login() {
                     }, 3000);
                 }
             }
+        } else {
+            toast.error("Erro ao Logar", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
         }
     }
     return (
