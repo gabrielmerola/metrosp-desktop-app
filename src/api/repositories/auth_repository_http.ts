@@ -10,9 +10,9 @@ export class AuthRepository {
             })
             localStorage.setItem('token', response.data.token)
             // alert(response.data.token)
-            return response.data
+            return response
         } catch(error: any) {
-            throw error
+            return error
         }
     }
 
@@ -20,11 +20,11 @@ export class AuthRepository {
         try {
             const response = await httpAuth.get('/me', {
                 headers: {
-                    Authorization: `bearer ${localStorage.getItem('token')}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
-            alert(response.data)
-            return response.data
+            // console.log(response.data)
+            return response
         } catch(error: any) {
             throw error
         }
