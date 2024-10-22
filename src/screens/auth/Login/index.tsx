@@ -70,18 +70,7 @@ export function Login() {
     }
     return (
         <main className="backgroundLogin">
-            <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-            />
+            <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
             <section className="backgroundBlue">
                 <div className="left">
                     <img src={logoGov} alt="Logo Governo do Estado São Paulo" />
