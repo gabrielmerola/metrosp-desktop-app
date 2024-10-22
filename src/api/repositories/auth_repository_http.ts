@@ -26,7 +26,7 @@ export class AuthRepository {
             // console.log(response.data)
             return response
         } catch(error: any) {
-            throw error
+            return error
         }
     }
 
@@ -40,11 +40,10 @@ export class AuthRepository {
             })
             return response
         } catch(error: any) {
-            throw error
+            return error
         }
     }
 
-    // Not implemented
     async confirmEmail(code: string) {
         try {
             const response = await httpAuth.post('/confirm-email', {
@@ -56,7 +55,7 @@ export class AuthRepository {
             })
             return response
         } catch(error: any) {
-            throw error
+            return error
         }
     }
 }
