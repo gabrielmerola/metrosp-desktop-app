@@ -14,12 +14,8 @@ export function Login() {
     const AuthRepo = new AuthRepository();
 
     async function onSubmit() {
-        if(!email || !password) {
-            alert('Preencha todos os campos')
-            return
-        }
-        if(email.match('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$') || password.match("^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&*()_\-+=\[{\]};:'\",<.>/?]).{8,}$")){
-            toast.error("Email ou Senha inválidos", {
+        if(!email || !password){
+            toast.warn("Preencha todos os campos", {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -32,22 +28,45 @@ export function Login() {
             return
         }
         const response = await AuthRepo.login(email, password)
-        if(response.token){
-            await AuthRepo.me()
+        console.log(response.status === 401)
+        if(response.status === 401) {
+            toast.error("Email ou Senha Inválidos", {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+            return
         }
-        toast.success("Bem-vindo!!", {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        });
-        // setTimeout(() => {
-        //     navigate('/central/dashboard')
-        // }, 3000);
+        if(response.status === 200){
+            const response = await AuthRepo.me()
+            // console.log(response.data.user.user_type)
+            if(response.status === 200) {
+                toast.success("Bem-vindo!!", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                });
+                if(response.data.user.user_type == "station"){
+                    setTimeout(() => {
+                        navigate('/station/dashboard')
+                    }, 3000);
+                } else {
+                    setTimeout(() => {
+                        navigate('/central/dashboard')
+                    }, 3000);
+                }
+            }
+        }
     }
     return (
         <main className="backgroundLogin">
