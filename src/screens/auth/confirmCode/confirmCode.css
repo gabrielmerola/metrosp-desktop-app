@@ -1,0 +1,50 @@
+.container {
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerCode {
+    border: 4px black solid;
+    width: 60%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.confirmCode {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.confirmCode input {
+    width: 8%;
+    text-align: center;
+    height: 64px;
+    border: 2px solid black;
+    border-radius: 8px;
+    box-shadow: 10px 10px 36px -7px rgba(0,0,0,0.75);
+}
+
+.confirmCode input:focus {
+    outline: none;
+}
+
+.button {
+    background-color: #001489;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
