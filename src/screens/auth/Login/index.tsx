@@ -6,11 +6,13 @@ import metroLogo from '../../../assets/metroLogo.png'
 import { AuthRepository } from "../../../api/repositories/auth_repository_http";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { jwtDecode } from "jwt-decode";
 
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [viewPass, setViewPass] = useState(false);
     const navigate = useNavigate();
     const AuthRepo = new AuthRepository();
 
@@ -61,31 +63,17 @@ export function Login() {
             return
         }
         if(response.status === 200){
-            const response = await AuthRepo.me()
-            if(response.status === 200) {
-                toast.success("Bem-vindo!!", {
-                    position: "top-center",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                });
-                setLoading(false)
-                if(response.data.user.user_type == "station"){
-                    setTimeout(() => {
-                        navigate('/station/dashboard')
-                    }, 3000);
-                } else {
-                    setTimeout(() => {
-                        navigate('/central/dashboard')
-                    }, 3000);
-                }
+            const token = localStorage.getItem('token')
+            if(!token) return
+            const user: {user_id: string, exp: number} = jwtDecode(token)
+            if(user.user_id.includes("@")){
+                navigate("/confirmCode")
+                return
             }
+            const response = await AuthRepo.me()
+            setLoading(false)
         } else {
-            toast.error("Erro ao Logar", {
+            toast.error("Erro ao logar", {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
@@ -95,8 +83,10 @@ export function Login() {
                 progress: undefined,
                 theme: "colored",
             });
+            setLoading(false)
         }
     }
+    
     return (
         <main className="backgroundLogin">
             <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="colored" />
@@ -120,7 +110,14 @@ export function Login() {
                             </div>
                             <div className="inputForm">
                                 <label htmlFor="pass">Senha</label>
-                                <input id='pass' onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Digite a sua Senha" />
+                                <div style={{display: "flex", justifyContent: 'space-between'}}>
+                                    <input style={{width: '90%'}} id='pass' onChange={(e) => setPassword(e.target.value)} type={viewPass ? "text" :"password"} placeholder="Digite a sua Senha" />
+                                    {viewPass ?
+                                        <i style={{cursor:'pointer'}} onClick={()=>setViewPass(!viewPass)} className="fa-solid fa-eye"></i>
+                                        :
+                                        <i style={{cursor:'pointer'}} onClick={()=>setViewPass(!viewPass)} className="fa-solid fa-eye-slash"></i>
+                                    }
+                                </div>
                                 <span style={{fontSize: 12}}>Esqueceu sua senha? <Link to={'/'} style={{textDecoration: "underline", color: 'black'}}>Clique aqui!</Link></span>
                             </div>
                             <div className="buttonForm">
