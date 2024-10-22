@@ -47,7 +47,7 @@ export function Login() {
             return
         }
         const response = await AuthRepo.login(email, password)
-        console.log(response.status === 401)
+        // console.log(response.status === 401)
         if(response.status === 401) {
             toast.error("Email ou Senha Inválidos", {
                 position: "top-center",
@@ -68,9 +68,10 @@ export function Login() {
             const user: {user_id: string, exp: number} = jwtDecode(token)
             if(user.user_id.includes("@")){
                 navigate("/confirmCode")
-                return
             }
+
             const response = await AuthRepo.me()
+            
             setLoading(false)
         } else {
             toast.error("Erro ao logar", {
