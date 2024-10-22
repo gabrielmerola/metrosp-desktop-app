@@ -10,10 +10,12 @@ import 'react-toastify/dist/ReactToastify.css';
 export function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const AuthRepo = new AuthRepository();
 
     async function onSubmit() {
+        setLoading(true)
         if(!email || !password){
             toast.warn("Preencha todos os campos", {
                 position: "top-center",
@@ -25,6 +27,7 @@ export function Login() {
                 progress: undefined,
                 theme: "colored",
             });
+            setLoading(false)
             return
         }
         if(!email.match("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$") || !password.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_\\-+=\\[{\\]};:'\",<.>/?]).{8,}$")){
@@ -38,6 +41,7 @@ export function Login() {
                 progress: undefined,
                 theme: "colored",
             });
+            setLoading(false)
             return
         }
         const response = await AuthRepo.login(email, password)
@@ -53,11 +57,11 @@ export function Login() {
                 progress: undefined,
                 theme: "colored",
             });
+            setLoading(false)
             return
         }
         if(response.status === 200){
             const response = await AuthRepo.me()
-            // console.log(response.data.user.user_type)
             if(response.status === 200) {
                 toast.success("Bem-vindo!!", {
                     position: "top-center",
@@ -69,6 +73,7 @@ export function Login() {
                     progress: undefined,
                     theme: "colored",
                 });
+                setLoading(false)
                 if(response.data.user.user_type == "station"){
                     setTimeout(() => {
                         navigate('/station/dashboard')
@@ -119,7 +124,7 @@ export function Login() {
                                 <span style={{fontSize: 12}}>Esqueceu sua senha? <Link to={'/'} style={{textDecoration: "underline", color: 'black'}}>Clique aqui!</Link></span>
                             </div>
                             <div className="buttonForm">
-                                <button type="button" onClick={onSubmit}>Entrar</button>
+                                <button type="button" onClick={onSubmit}>{loading ? <i className="fa-solid fa-spinner animation-spin"></i> : "Entrar"}</button>
                             </div>
                         </form>
                     </div>
